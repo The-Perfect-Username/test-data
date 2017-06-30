@@ -23,9 +23,11 @@ public class MainProgram {
 
         // m.createTestUsers();
         readFileToList("./source/input.txt", "\\s*\\.\\s*");
-        for (String s: tokens) {
-            System.out.println(s);
-        }
+        // for (String s: tokens) {
+        //     System.out.println(s);
+        // }
+
+        createTestUsers();
     }
 
     private static void readFileToList(String input, String delimiter) {
@@ -67,29 +69,68 @@ public class MainProgram {
     }
 
     /**
-    Creates user data for a users table. Data include userid, username, first and last name,
-    email address, plaintext passwords, and creation date-times in YYY-MM-DD HH:ii:ss format.
+    * Creates user data for a users table. Data include userid, username, first and last name,
+    * email address, plaintext passwords, and creation date-times in YYY-MM-DD HH:ii:ss format.
     */
     private static void createTestUsers() {
-
+        int a = 0;
+        String username;
+        while (a < 90) {
+            username = createUsername();
+            System.out.println(username);
+            System.out.println(createEmailAddress(username));
+            a++;
+        }
     }
 
-    private static void createUsername() {
-
+    /**
+    * Recursively looks for a free username
+    * If a username is not currently in use then add the username to the used List
+    * and return for assignment
+    */
+    private static String createUsername() {
+        // Use createName method to create a username
+        String username = createName();
+        // Check if the username is already in use. If it is, then call the method again.
+        if (usedUsernames.contains(username)) {
+            createUsername();
+        } else {
+            // Add the username to the used List then return the username
+            usedUsernames.add(username);
+        }
+        return username;
     }
 
-    private static void createName() {
-
+    private static String createName() {
+        int length = tokens.size();
+        int index = randInt(0, length);
+        return firstLetterUpperCase(tokens.get(index));
     }
 
-    private static void createEmailAddress() {
+    private static String createEmailAddress(String name) {
 
+        int length = emails.size();
+        int index = randInt(0, length);
+        String email = name.toLowerCase() + emails.get(index);
+
+        if (usedEmailAddresses.contains(email)) {
+            createEmailAddress(name);
+        } else {
+            usedEmailAddresses.add(email);
+        }
+
+        return email;
     }
 
     private static int randInt(int min, int max) {
         Random rand = new Random();
+        max = max > 1 ? max - 1 : 1;
         int randomNumber = rand.nextInt((max - min) + 1) - min;
         return randomNumber;
+    }
+
+    private static String firstLetterUpperCase(String word) {
+        return word.substring(0,1).toUpperCase() + word.substring(1);
     }
 
 }
