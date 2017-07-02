@@ -15,6 +15,7 @@ public class User {
     // Email address extentions
     private static List<String> emails = new ArrayList<String>(Arrays.asList("@gmail.com", "@hotmail.com", "@outlook.com", "@yahoo.com"));
 
+    // Constructor
     public User(int userid, String firstname, String lastname, String username) {
         this.userId = userid;
         this.firstname = firstname;
@@ -23,6 +24,9 @@ public class User {
         this.email = createEmailAddress(username);
     }
 
+    /**
+    * Creates an email address using the username and one of the 4 available email providers
+    */
     private static String createEmailAddress(String name) {
 
         int length = emails.size();
@@ -32,37 +36,53 @@ public class User {
         return email;
     }
 
-    public void show() {
-        System.out.println(username);
-        System.out.println(email);
-    }
-
+    /**
+    * Converts the first character of a given word to uppercase
+    */
     private static String firstLetterUpperCase(String word) {
         return word.substring(0,1).toUpperCase() + word.substring(1);
     }
 
+    /**
+    * Random number generator. Returns a number between the given min and max ranges
+    */
     private static int randInt(int min, int max) {
         Random rand = new Random();
         int randomNumber = rand.nextInt((max - min)) - min;
         return randomNumber;
     }
 
+    /**
+    * Returns the user's userId
+    */
     public int getUserId() {
         return userId;
     }
 
+    /**
+    * Returns the user's first name
+    */
     public String getFirstname() {
         return firstname;
     }
 
+    /**
+    * Returns the user's last name
+    */
     public String getLastname() {
         return lastname;
     }
 
+    /**
+    * Returns the user's username
+    */
     public String getUsername() {
         return username;
     }
 
+    /**
+    * Returns the user's email address
+    */
     public String getEmail() {
         return email;
     }

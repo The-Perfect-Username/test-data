@@ -25,6 +25,9 @@ public class MainProgram {
         createTestUsers();
     }
 
+    /**
+    * Reads the input file for all sentences for later processing
+    */
     private static void readFileToList(String input, String delimiter) {
         try {
             // Read entire file into a string
@@ -43,7 +46,9 @@ public class MainProgram {
         }
     }
 
-
+    /**
+    * Tokenises all words in a sentence and stores it into the token list.
+    */
     private static void tokeniseWords(String sentence) {
         try {
             // Remove commas and semi-colons
@@ -66,7 +71,7 @@ public class MainProgram {
 
     /**
     * Creates user data for a users table. Data include userid, username, first and last name,
-    * email address, plaintext passwords, and creation date-times in YYY-MM-DD HH:ii:ss format.
+    * email address, plaintext passwords.
     */
     private static void createTestUsers() {
         try {
@@ -90,9 +95,8 @@ public class MainProgram {
     }
 
     /**
-    * Recursively looks for a free username
-    * If a username is not currently in use then add the username to the used List
-    * and return for assignment
+    * Converts the tokens list to a hashset to remove any duplicates and
+    * adds all of the set values to the usernames list
     */
     private static void createUsernamesFromTokens() {
         Set<String> set = new HashSet<String>();
@@ -100,19 +104,27 @@ public class MainProgram {
         usernames.addAll(set);
     }
 
+    /**
+    * Randomly chooses a word from the tokens list as a name
+    */
     private static String createName() {
         int length = tokens.size();
         int index = randInt(0, length);
         return firstLetterUpperCase(tokens.get(index));
     }
 
-
+    /**
+    * Random number generator. Returns a random number between the given min and max ranges
+    */
     private static int randInt(int min, int max) {
         Random rand = new Random();
         int randomNumber = rand.nextInt((max - min)) - min;
         return randomNumber;
     }
 
+    /**
+    * Converts the first character of a given word to uppercase
+    */
     private static String firstLetterUpperCase(String word) {
         return word.substring(0,1).toUpperCase() + word.substring(1);
     }
