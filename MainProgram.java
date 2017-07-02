@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
 import java.io.*;
-// import User.User;
-
 
 public class MainProgram {
 
@@ -19,10 +19,15 @@ public class MainProgram {
     private static List<String> usedEmailAddresses = new ArrayList<String>();
     // List to store all used usernames to vaoid duplication
     private static List<String> usernames = new ArrayList<String>();
+    // List to store all created users
+    private static List<User> users = new ArrayList<User>();
 
     public static void main(String []args) throws IOException  {
         readFileToList("./source/input.txt", "\\s*\\.\\s*");
         createTestUsers();
+        for (User u: users) {
+            System.out.println(u.getEmail());
+        }
     }
 
     /**
@@ -80,13 +85,18 @@ public class MainProgram {
             String username, firstname, lastname;
             createUsernamesFromTokens();
             while (i < numberOfTokens) {
+
                 username = usernames.get(i);
                 firstname = createName();
                 lastname = createName();
 
+                // Create new user account
                 User u = new User(i + 1, firstname, lastname, username);
                 String user = String.format("%d,%s,%s,%s,%s,password", u.getUserId(), u.getFirstname(), u.getLastname(),u.getEmail(), u.getUsername());
+                // Write string to csv file
                 out.println(user);
+                // Add user to users list
+                users.add(u);
                 i++;
             }
         } catch (Exception e) {
@@ -127,6 +137,30 @@ public class MainProgram {
     */
     private static String firstLetterUpperCase(String word) {
         return word.substring(0,1).toUpperCase() + word.substring(1);
+    }
+
+    /**
+    * Randomly generates titles from the sentences list
+    */
+    private static String createTitle() {
+        int min = 0, max = sentences.size();
+        int index = randInt(min, max);
+        return sentences.get(index);
+    }
+
+    /**
+    * Randomly generates parapgraphs of different sizes, using sentences from the sentences list
+    */
+    private static String createParagraph() {
+        int pSizeMax = randInt(0, 20), numberOfSentences = sentences.size(), index;
+        String paragraph = "";
+
+        for (int i = 0; i < pSizeMax; i++) {
+            index = randInt(0, numberOfSentences);
+            paragraph += String.format("%s. ", firstLetterUpperCase(sentences.get(index)));
+        }
+
+        return paragraph;
     }
 
 }

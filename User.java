@@ -6,11 +6,11 @@ import java.io.*;
 
 public class User {
 
-    public static int userId = 0;
-    public static String firstname = null;
-    public static String lastname = null;
-    public static String username = null;
-    public static String email = null;
+    public int userId = 0;
+    public String firstname = null;
+    public String lastname = null;
+    public String username = null;
+    public String email = null;
 
     // Email address extentions
     private static List<String> emails = new ArrayList<String>(Arrays.asList("@gmail.com", "@hotmail.com", "@outlook.com", "@yahoo.com"));
@@ -56,35 +56,35 @@ public class User {
     * Returns the user's userId
     */
     public int getUserId() {
-        return userId;
+        return this.userId;
     }
 
     /**
     * Returns the user's first name
     */
     public String getFirstname() {
-        return firstname;
+        return this.firstname;
     }
 
     /**
     * Returns the user's last name
     */
     public String getLastname() {
-        return lastname;
+        return this.lastname;
     }
 
     /**
     * Returns the user's username
     */
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     /**
     * Returns the user's email address
     */
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
 }
