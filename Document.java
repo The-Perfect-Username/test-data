@@ -1,6 +1,6 @@
 public class Document {
 
-    public int userId = null;
+    public int userId = 0;
     public String title = null;
     public String description = null;
 
@@ -26,7 +26,7 @@ public class Document {
     public String getDescription() {
         return this.description;
     }
-    
+
     /**
     * Returns the document's userId
     */

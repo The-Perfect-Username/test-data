@@ -21,13 +21,18 @@ public class MainProgram {
     private static List<String> usernames = new ArrayList<String>();
     // List to store all created users
     private static List<User> users = new ArrayList<User>();
+    // List to store all documents
+    private static List<Document> documents = new ArrayList<Document>();
 
     public static void main(String []args) throws IOException  {
+        
         readFileToList("./source/input.txt", "\\s*\\.\\s*");
+
         createTestUsers();
-        for (User u: users) {
-            System.out.println(u.getEmail());
-        }
+
+        assignDocumentsToUsers();
+
+        createDocumentsFile();
     }
 
     /**
@@ -162,5 +167,44 @@ public class MainProgram {
 
         return paragraph;
     }
+
+    /**
+    * Assign documents to users
+    */
+    private static void assignDocumentsToUsers() {
+        for (User u: users) {
+            assignDocumentsToUser(u.getUserId());
+        }
+    }
+    /**
+    * Assign documents to a user and adds the documents to an array list
+    */
+    private static void assignDocumentsToUser(int userId) {
+        // Number of documents to be created
+        int number = randInt(0, 5), i;
+
+        for (i = 0; i < number; i++) {
+            Document d = new Document(userId, createTitle(), createParagraph());
+            documents.add(d);
+        }
+    }
+
+    /**
+    * Writes the documents to a csv file
+    */
+    private static void createDocumentsFile() {
+        try {
+            PrintStream out = new PrintStream("./output/documents.csv");
+            for (Document d : documents) {
+                String line = String.format("%d,\"%s\",\"%s\"", d.getUserId(), d.getTitle(), d.getDescription());
+                out.println(line);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            System.exit(0);
+        }
+    }
+
+
 
 }
